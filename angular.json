@@ -27,17 +27,23 @@
             "outputPath": "dist/pass-forge-client",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-green/theme.css",
+                "bundleName": "light",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-green/theme.css",
+                "bundleName": "dark",
+                "inject": false
+              },
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": []
           },
@@ -86,23 +92,18 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "7f04761b-5455-4d98-b3bc-185021e3f2ef"
   }
 }
