@@ -26,10 +26,10 @@ export class ThemeService {
   }
 
   private setTheme(theme: string) {
-    let themeLink = document.getElementById('app-theme') as HTMLLinkElement;
+   let themeLink = document.getElementsByName('data-theme')[0] as HTMLElement;
 
-    if (themeLink) {
-      themeLink.href = theme + '.css';
-    }
+   if (themeLink) {
+     themeLink.setAttribute('data-theme', theme); // Assuming `theme` is the value you want to set
+   }
   }
 }

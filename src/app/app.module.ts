@@ -4,24 +4,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './component/header/header.component';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { FormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
+
+
+import { CaptionComponent } from './component/caption/caption.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { NotFoundComponent } from './component/not-found/not-found.component';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent,HeaderComponent
+    AppComponent,HeaderComponent, CaptionComponent, SignupComponent, NotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    InputSwitchModule,
-    ToolbarModule,
-    ButtonModule,
-    FormsModule,
-    InputTextModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
