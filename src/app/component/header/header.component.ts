@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,8 @@ export class HeaderComponent {
   checked!: boolean;
   selectedTheme!: string;
   themeService: ThemeService = inject(ThemeService);
+  auth = inject(AuthService);
+  pic = JSON.parse(sessionStorage.getItem('loggedUser')!).picture;
 
   ngOnInit() {
     this.selectedTheme = this.themeService.getTheme();
@@ -18,5 +21,10 @@ export class HeaderComponent {
 
   onToggleTheme() {
     this.selectedTheme = this.themeService.toggleTheme();
+  }
+
+  signout() {
+    sessionStorage.removeItem('loggedUser');
+    this.auth.signOut();
   }
 }

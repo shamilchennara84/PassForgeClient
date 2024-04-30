@@ -6,22 +6,30 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './component/header/header.component';
 
 
-import { CaptionComponent } from './component/caption/caption.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
+
+import { AuthCardComponent } from './component/auth-card/auth-card.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { PasswordGeneratorComponent } from './component/password-generator/password-generator.component';
+import { FormsModule } from '@angular/forms';
+
+
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,HeaderComponent, CaptionComponent, SignupComponent, NotFoundComponent
+    AppComponent,
+    HeaderComponent,
+    SignupComponent,
+    NotFoundComponent,
+    AuthCardComponent,
+    HomePageComponent,
+    PasswordGeneratorComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
