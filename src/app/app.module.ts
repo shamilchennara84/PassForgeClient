@@ -12,7 +12,10 @@ import { NotFoundComponent } from './component/not-found/not-found.component';
 import { AuthCardComponent } from './component/auth-card/auth-card.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { PasswordGeneratorComponent } from './component/password-generator/password-generator.component';
+
+
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -28,7 +31,7 @@ import { FormsModule } from '@angular/forms';
     HomePageComponent,
     PasswordGeneratorComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule ,FormsModule,HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

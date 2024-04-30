@@ -1,41 +1,120 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Password } from '../../services/pwdPayload.model';
+
 
 @Component({
   selector: 'app-password-generator',
   templateUrl: './password-generator.component.html',
-  styleUrl: './password-generator.component.scss',
+  styleUrls: ['./password-generator.component.scss'],
 })
-export class PasswordGeneratorComponent implements OnInit {
-  password: string = '';
-  passwordLength: number = 12;
-  includeNumbers: boolean = true;
-  includeUppercase: boolean = true;
-  includeLowercase: boolean = true;
-  includeSpecialChars: boolean = true;
+export class PasswordGeneratorComponent implements OnChanges {
+  password = '';
+  passwordLength = 0;
+  useLetters = false;
+  useNumbers = false;
+  useSymbols = false;
+  copySuccess = false;
+  passwordDescription: string = '';
+  isSaveModalOpen: boolean = false;
+  http = inject(HttpClient);
 
-  ngOnInit(): void {
-    this.generatePassword();
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      changes['passwordLength'] ||
+      changes['useLetters'] ||
+      changes['useNumbers'] ||
+      changes['useSymbols']
+    ) {
+      console.log("change");
+      this.isFormValid();
+    }
   }
 
-  generatePassword(): void {
-    let chars =
-      'abcdefghijklmnopqrstuvwxyz';
-    let password = '';
+  isFormValid() {
+    return (
+      this.passwordLength !== 0 &&
+      (this.useLetters || this.useNumbers || this.useSymbols)
+    );
+  }
 
-    if (this.includeNumbers) {
-      chars += '0123456789';
+  onChangeLength(value: string) {
+    const parsedValue = parseInt(value);
+
+    if (!isNaN(parsedValue)) {
+      this.passwordLength = parsedValue;
     }
-    if (this.includeUppercase) {
-      chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  }
+
+  generatePassword() {
+    const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+    const upperCaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const symbols = '!@#$%^&*()_-,.';
+    let availableCharacters = '';
+
+    if (this.useLetters) {
+      availableCharacters += lowerCaseLetters;
+      availableCharacters += upperCaseLetters;
     }
-    if (this.includeSpecialChars) {
-      chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+    if (this.useNumbers) {
+      availableCharacters += numbers;
     }
+
+    if (this.useSymbols) {
+      availableCharacters += symbols;
+    }
+
+    const generatedPassword = [];
 
     for (let i = 0; i < this.passwordLength; i++) {
-      password += chars.charAt(Math.floor(Math.random() * chars.length));
+      const max = availableCharacters.length;
+      const ran = Math.random();
+      const idx = Math.floor(ran * (max + 1));
+
+      generatedPassword.push(availableCharacters[idx]);
     }
 
-    this.password = password;
+    this.password = generatedPassword.join('');
+  }
+
+  copyToClipboard() {
+    navigator.clipboard
+      .writeText(this.password)
+      .then(() => {
+        this.copySuccess = true;
+        setTimeout(() => {
+          this.copySuccess = false;
+        }, 1000);
+      })
+      .catch((err) => {
+        console.error('Could not copy text: ', err);
+      });
+  }
+
+  openSaveModal() {
+    this.isSaveModalOpen = true;
+  }
+
+  closeSaveModal() {
+    this.isSaveModalOpen = false;
+  }
+
+  savePassword() {
+    const payload:Password = {
+      password: this.password,
+      description: this.passwordDescription,
+    };
+
+    this.http.post('YOUR_BACKEND_ENDPOINT_HERE', payload).subscribe(
+      (response) => {
+        console.log('Password saved successfully', response);
+        this.closeSaveModal();
+      },
+      (error) => {
+        console.error('Error saving password', error);
+      }
+    );
   }
 }
