@@ -16,6 +16,7 @@ import { PasswordGeneratorComponent } from './component/password-generator/passw
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ListPasswordComponent } from './component/list-password/list-password.component';
 
 
 
@@ -30,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     AuthCardComponent,
     HomePageComponent,
     PasswordGeneratorComponent,
+    ListPasswordComponent,
   ],
   imports: [BrowserModule, AppRoutingModule ,FormsModule,HttpClientModule],
   providers: [],
