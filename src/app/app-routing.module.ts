@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './pages/signup/signup.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { passwordResolver } from './services/password-resolver.service';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomePageComponent,
+    resolve: { passwords: passwordResolver },
   },
   {
     path: '**',

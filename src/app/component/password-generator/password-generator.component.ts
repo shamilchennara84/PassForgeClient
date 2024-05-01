@@ -1,7 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Password } from '../../services/pwdPayload.model';
-
+import { PasswordService } from '../../services/password.service';
 
 @Component({
   selector: 'app-password-generator',
@@ -19,6 +25,8 @@ export class PasswordGeneratorComponent implements OnChanges {
   isSaveModalOpen: boolean = false;
   http = inject(HttpClient);
 
+  constructor(private passwordService: PasswordService) {}
+
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes['passwordLength'] ||
@@ -26,7 +34,7 @@ export class PasswordGeneratorComponent implements OnChanges {
       changes['useNumbers'] ||
       changes['useSymbols']
     ) {
-      console.log("change");
+      console.log('change');
       this.isFormValid();
     }
   }
@@ -102,19 +110,17 @@ export class PasswordGeneratorComponent implements OnChanges {
   }
 
   savePassword() {
-    const payload:Password = {
+    const passwordPayload: Password = {
       password: this.password,
       description: this.passwordDescription,
     };
-
-    this.http.post('YOUR_BACKEND_ENDPOINT_HERE', payload).subscribe(
-      (response) => {
-        console.log('Password saved successfully', response);
-        this.closeSaveModal();
+    const loggedUser = JSON.parse(sessionStorage.getItem('loggedUser')!);
+    const userEmail = loggedUser.email;
+    this.passwordService.addPassword(passwordPayload, userEmail).subscribe({
+      next: (newPassword) => {
+        // Handle success, e.g., add the new password to the UI
       },
-      (error) => {
-        console.error('Error saving password', error);
-      }
-    );
+      error: (error: Error) => console.error('Failed to add password', error),
+    });
   }
 }
