@@ -4,6 +4,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { passwordResolver } from './services/password-resolver.service';
+import { authGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomePageComponent,
+    canActivate:[authGuard],
     resolve: { passwords: passwordResolver },
   },
   {
