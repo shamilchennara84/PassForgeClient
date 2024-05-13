@@ -1,4 +1,10 @@
-import { Component, inject, NgZone, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  NgZone,
+  OnInit,
+
+} from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 
@@ -12,6 +18,8 @@ declare var google: any;
 export class AuthCardComponent implements OnInit {
   private router = inject(Router);
   private ngZone = inject(NgZone);
+  isLoading = true;
+
   clientId!: string;
   ngOnInit(): void {
     this.clientId = environment.googleclientId;
@@ -27,6 +35,9 @@ export class AuthCardComponent implements OnInit {
       width: 240,
       height: 50,
     });
+     setTimeout(() => {
+       this.isLoading = false; // Hide loader
+     }, 100);
   }
 
   decodeToken(token: string) {
