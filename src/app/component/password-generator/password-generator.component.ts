@@ -110,6 +110,7 @@ export class PasswordGeneratorComponent implements OnChanges {
   }
 
   savePassword() {
+    this.closeSaveModal();
     const passwordPayload: Password = {
       password: this.password,
       description: this.passwordDescription,
@@ -118,7 +119,7 @@ export class PasswordGeneratorComponent implements OnChanges {
     const userEmail = loggedUser.email;
     this.passwordService.addPassword(passwordPayload, userEmail).subscribe({
       next: (newPassword) => {
-        this.isSaveModalOpen = false;
+
       },
       error: (error: Error) => console.error('Failed to add password', error),
     });
