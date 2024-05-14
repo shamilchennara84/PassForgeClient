@@ -118,7 +118,7 @@ export class PasswordGeneratorComponent implements OnChanges {
     const userEmail = loggedUser.email;
     this.passwordService.addPassword(passwordPayload, userEmail).subscribe({
       next: (newPassword) => {
-        // Handle success, e.g., add the new password to the UI
+        this.isSaveModalOpen = false;
       },
       error: (error: Error) => console.error('Failed to add password', error),
     });
